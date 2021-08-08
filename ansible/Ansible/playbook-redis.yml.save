@@ -1,0 +1,30 @@
+    - name: secure redis
+      lineinfile: 
+        dest: /etc/redis/redis.conf
+        regexp: '^# requirepass \w*$'
+        line: 'requirepass {{ redis_password }}'
+        state: present---
+- name: Install redis 
+  hosts: test_server
+  become: yes
+
+  tasks:
+    - name: install epel
+      shell: amazon-linux-extras install epel -y|
+             yum-config-manager --enable epel
+
+    - name: install redis
+      yum: name=redis state=present
+
+    - name: service for redis
+      service: name=redis state=started enabled=yes
+    
+    - name: create file
+      shell: echo "!vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          33303362353563643462333030666534313465353765376535373061343162386439633230343538
+          6462303062653265376331373633383132326530303965300a666330633533303064353339303961
+          35353737376561653337393232396434356361643837646437373661326130383934636233346436
+          3732333939653030640a353164623566663931613334633030323766386266646230396632376566
+          3233"  >> /etc/test.txt
+
