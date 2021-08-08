@@ -6,9 +6,11 @@ case $1 in
     echo "ansible container is ready"
     ;;
   terraform)
-    echo stoping
+    docker build -t terraform terraform/
+    docker run -v $PWD/terraform/infrastructure/:/volumes/infrastructure -i terraform:latest
+    echo terraform "container is ready"
     ;;
   *)
-    echo dont know
+    echo dont know, use terraform or ansible
     ;;
 esac
