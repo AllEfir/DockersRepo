@@ -6,4 +6,3 @@ Solutions to the tasks Docker
 
 
 Thanks to the Dumynskyi Oleksandr, one of the best person who I know for help me a lot :D
-
